@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
       when Line::Bot::Message::Text
         Rails.logger.debug message.from_mid
         Rails.logger.debug message.content[:text]
-        logger.debub(client.send_text(
+        logger.debug(client.send_text(
           to_mid: message.from_mid,
           text: message.content[:text],
         ))
