@@ -49,6 +49,6 @@ group :production do
   gem 'rails_12factor'
 end
 
-gem 'line-bot-api'
+gem 'line-bot-api', github: 'DaikiInaba/line-bot-sdk-ruby'
 gem 'pry-rails'
 gem 'rest-client'
