@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
       config.channel_mid = ENV["LINE_CHANNEL_MID"]
     }
 
+    Rails.logger.debug(client)
+
     signature = request.env['HTTP_X_LINE_CHANNELSIGNATURE']
     unless client.validate_signature(request.body.read, signature)
       error 400 do 'Bad Request' end
