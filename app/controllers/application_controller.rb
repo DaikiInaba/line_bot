@@ -11,9 +11,6 @@ class ApplicationController < ActionController::Base
       config.channel_mid = ENV["LINE_CHANNEL_MID"]
     }
 
-
-    Rails.logger.debug(client)
-
     signature = request.env['HTTP_X_LINE_CHANNELSIGNATURE']
     unless client.validate_signature(request.body.read, signature)
       error 400 do 'Bad Request' end
@@ -21,7 +18,7 @@ class ApplicationController < ActionController::Base
 
     receive_request = Line::Bot::Receive::Request.new(request.env)
     receive_request.data.each do |message|
-      Rails.logger.debug(message.from_mid)
+      Rails.logger.debug(message.content)
       case message.content
       when Line::Bot::Message::Text
         client.send_text(
