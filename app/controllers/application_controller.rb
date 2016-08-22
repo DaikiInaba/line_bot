@@ -20,8 +20,6 @@ class ApplicationController < ActionController::Base
     receive_request.data.each do |message|
       case message.content
       when Line::Bot::Message::Text
-        Rails.logger.debug message.from_mid
-        Rails.logger.debug message.content[:text]
         logger.debug(client.send_text(
           to_mid: message.from_mid,
           text: message.content[:text],
