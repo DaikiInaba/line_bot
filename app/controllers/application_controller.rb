@@ -29,5 +29,6 @@ class ApplicationController < ActionController::Base
         )
       end
     end
+    render nothing: true
   end
 end
