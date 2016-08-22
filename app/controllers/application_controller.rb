@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
         logger.debug(client.send_text(
           to_mid: message.from_mid,
           text: message.content[:text],
-        )).body
+        ).body)
       end
     end
     render nothing: true
