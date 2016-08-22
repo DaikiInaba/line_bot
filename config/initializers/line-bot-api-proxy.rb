@@ -1,16 +1,8 @@
 require 'rest-client'
 
-module Line
-  module Bot
-    class HTTPClient
-      def post(url, payload, header = {})
-        RestClient.proxy = ENV["FIXIE_URL"]
-        RestClient.post(url, payload, header)
-      end
-
-      def daiki
-        EEEEEEEEEEEEEEEEEEEEEEEEEEE
-      end
-    end
+Line::Bot::HTTPClient.class_eval do
+  def post(url, payload, header = {})
+    RestClient.proxy = ENV["FIXIE_URL"]
+    RestClient.post(url, payload, header)
   end
 end
