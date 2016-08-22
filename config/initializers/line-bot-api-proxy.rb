@@ -3,13 +3,9 @@ require 'rest-client'
 module Line
   module Bot
     class HTTPClient
-      def post
-        Rails.logger.debug("aaaaaaaaaaaaaaaaaaaaaaa")
+      def post(url, payload, header = {})
         RestClient.proxy = ENV["FIXIE_URL"]
         RestClient.post(url, payload, header)
-      end
-
-      def daiki
       end
     end
   end
