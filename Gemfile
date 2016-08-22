@@ -51,3 +51,4 @@ end
 
 gem 'line-bot-api'
 gem 'pry-rails'
+gem 'rest-client'
