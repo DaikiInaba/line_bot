@@ -2,12 +2,9 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
+  require 'line/bot'
 
   def callback
-    logger.debug(ENV["LINE_CHANNEL_ID"])
-    logger.debug(ENV["LINE_CHANNEL_SECRET"])
-    logger.debug(ENV["LINE_CHANNEL_MID"])
-
     client = Line::Bot::Client.new { |config|
       config.channel_id = ENV["LINE_CHANNEL_ID"]
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
