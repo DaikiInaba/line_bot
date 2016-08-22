@@ -21,10 +21,10 @@ class ApplicationController < ActionController::Base
     receive_request.data.each do |message|
       case message.content
       when Line::Bot::Message::Text
-        logger.debug(client.send_text(
+        client.send_text(
           to_mid: message.from_mid,
           text: message.content[:text],
-        ).body)
+        )
       end
     end
     render nothing: true

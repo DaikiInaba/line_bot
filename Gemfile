@@ -50,5 +50,3 @@ group :production do
 end
 
 gem 'line-bot-api', github: 'DaikiInaba/line-bot-sdk-ruby'
-gem 'pry-rails'
-gem 'rest-client'
