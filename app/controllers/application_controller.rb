@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
     receive_request = Line::Bot::Receive::Request.new(request.env)
     receive_request.data.each do |message|
-      Rails.logger.debug(message)
+      Rails.logger.debug(message.from_mid)
       case message.content
       when Line::Bot::Message::Text
         client.send_text(
