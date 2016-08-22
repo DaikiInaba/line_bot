@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def callback
+    logger.debug(ENV["LINE_CHANNEL_ID"])
+    logger.debug(ENV["LINE_CHANNEL_SECRET"])
+    logger.debug(ENV["LINE_CHANNEL_MID"])
+
     client = Line::Bot::Client.new { |config|
       config.channel_id = ENV["LINE_CHANNEL_ID"]
       config.channel_id = ENV["LINE_CHANNEL_SECRET"]
