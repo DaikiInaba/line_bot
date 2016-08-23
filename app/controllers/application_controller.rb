@@ -19,13 +19,8 @@ class ApplicationController < ActionController::Base
 
     receive_request = Line::Bot::Receive::Request.new(request.env)
     receive_request.data.each do |message|
-      case message.content
-      when Line::Bot::Message::Text
-        client.send_text(
-          to_mid: message.from_mid,
-          text: message.content[:text],
-        )
-      end
+      processor = Line::Bot::MessageProcessor.new
+      processor.process(client, message)
     end
     render nothing: true
   end
