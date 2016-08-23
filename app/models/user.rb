@@ -1,4 +1,4 @@
 class User < ActiveRecord::Base
   has_many :keywords
-  validates :mid
+  validate :mid
 end
