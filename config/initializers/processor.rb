@@ -36,7 +36,7 @@ module Line
       private
       def initial_processor
         user = User.where(mid: to_mid).first_or_initialize
-        user.save!
+        return if user.save!
 
         message = ""
         message += "ご登録ありがとうございます！\n"
