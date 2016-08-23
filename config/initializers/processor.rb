@@ -4,7 +4,7 @@ require 'line/bot/utils'
 module Line
   module Bot
     class Processor
-      attr_accessor :client, :message, :to_mid
+      attr_accessor :client, :data, :to_mid
 
       def initialize(client, data)
         @client = client
