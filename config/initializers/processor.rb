@@ -31,11 +31,6 @@ module Line
             )
           end
         end
-          client.send_text(
-            to_mid: message.from_mid,
-            text: text_processor,
-          )
-
       end
 
       private
