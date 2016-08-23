@@ -27,7 +27,7 @@ module Line
         user = User.where(mid: mid).first_or_initialize
         user.save!
 
-        return "registerd"
+        return new_keyword_path(mid: mid)
       end
     end
   end
