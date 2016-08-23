@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
 
     receive_request = Line::Bot::Receive::Request.new(request.env)
     receive_request.data.each do |message|
-      processor = Line::Bot::MessageProcessor.new
-      processor.process(client, message)
+      processor = Line::Bot::MessageProcessor.new(client, message)
+      processor.process
     end
     render nothing: true
   end
