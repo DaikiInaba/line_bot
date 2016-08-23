@@ -27,7 +27,7 @@ module Line
         user = User.where(mid: mid).first_or_initialize
         user.save!
 
-        return new_keyword_path(mid: mid)
+        return "https://lovers-bot.herokuapp.com/keyword/new"
       end
     end
   end
