@@ -18,7 +18,7 @@ module Line
           case data.content
           when Line::Bot::Operation::AddedAsFriend
             client.send_text(
-              to_mid: to_mid,
+              to_mid: from_mid,
               text: initial_processor,
             )
           end
@@ -48,8 +48,6 @@ module Line
 
       def to_mid
         mids = User.all.map{|user| user.mid}
-        deleted_mids = mids.dup.delete(from_mid)
-        mids = deleted_mids if deleted_mids.length > 0
 
         mids
       end
