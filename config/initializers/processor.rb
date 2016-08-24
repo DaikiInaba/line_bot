@@ -47,8 +47,12 @@ module Line
               send_to_them(text_processor)
             end
           when Line::Bot::Message::Sticker
-            user = User.where(mid: from_mid).first_or_initialize
-            user.save!
+            client.send_sticker(
+              to_mid: to_mids,
+              stkpkgid: data.content[:stkpkgid],
+              stkid: data.content[:stkid],
+              stkver: data.content[:stkver],
+            )
           end
         end
       end
