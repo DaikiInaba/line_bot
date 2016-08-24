@@ -40,15 +40,12 @@ module Line
 
         message = ""
         message += "ご登録ありがとうございます！\n"
-        message += "こちらで気になるイベントのキーワードを登録してください\n"
-        message += "https://line-lovers.herokuapp.com/keywords/new"
+        message += "イベントを逃さず遊びつくしましょう！\n"
 
         message
       end
 
       def text_processor
-        message = ""
-        message = "テスト"
       end
     end
   end

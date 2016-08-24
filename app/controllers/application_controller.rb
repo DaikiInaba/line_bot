@@ -19,9 +19,8 @@ class ApplicationController < ActionController::Base
 
     receive_request = Line::Bot::Receive::Request.new(request.env)
     receive_request.data.each do |data|
-      Rails.logger.debug(data)
       processor = Line::Bot::Processor.new(client, data)
-      processor.process.body
+      processor.process
     end
     render nothing: true
   end
