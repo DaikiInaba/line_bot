@@ -66,15 +66,18 @@ module Line
         endpoint_url = "https://trialbot-api.line.me/v1/bot/message/#{id}/content"
 
         uri = URI.parse(endpoint_url)
+        response
+        Net::HTTP.start(uri.host, uri.port, use_ssl: true){|http|
+          req = Net::HTTP::Get.new(uri.path)
+          req["Content-type"] = "application/json; charset=UTF-8"
+          req["X-Line-ChannelID"] = ENV["LINE_CHANNEL_ID"]
+          req["X-Line-ChannelSecret"] = ENV["LINE_CHANNEL_SECRET"]
+          req["X-Line-Trusted-User-With-ACL"] = ENV["LINE_CHANNEL_MID"]
 
-        req = Net::HTTP::Get.new(uri.host, uri.port)
-        req.use_ssl = true
-        req["Content-type"] = "application/json; charset=UTF-8"
-        req["X-Line-ChannelID"] = ENV["LINE_CHANNEL_ID"]
-        req["X-Line-ChannelSecret"] = ENV["LINE_CHANNEL_SECRET"]
-        req["X-Line-Trusted-User-With-ACL"] = ENV["LINE_CHANNEL_MID"]
+          response = http.request(req)
+        }
 
-        res = Net::HTTP.start(uri.host, uri.port) {|http| http.request(req) }
+        response
       end
     end
   end
