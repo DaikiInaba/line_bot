@@ -47,6 +47,9 @@ module Line
       end
 
       def to_mid
+        user = User.where(mid: mid).first_or_initialize
+        user.save!
+
         mids = User.all.map{|user| user.mid}
 
         mids
