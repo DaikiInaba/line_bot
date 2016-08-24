@@ -64,6 +64,8 @@ module Line
 
         if /(?<month>\d{1,2})月(?<date>\d{1,2})日/ =~ text
           year = Date.today.year.to_s
+          month = "0" + month if month.length == 1
+          date = "0" + month if date.length == 1
           search_date = year + month + date
           Rails.logger.error(search_date)
           events = Event.where('started_at <= ?', search_date).where('expired_at >= ?', search_date)
