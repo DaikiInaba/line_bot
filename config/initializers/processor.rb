@@ -27,10 +27,31 @@ module Line
         when Line::Bot::Receive::Message
           case data.content
           when Line::Bot::Message::Text
-            client.send_text(
-              to_mid: to_mid,
-              text: data.content[:text],
-            )
+            user = User.find_by(mid: from_mid)
+            res_flg = false
+            to_mid, text = ""
+            case data.content[:text]
+            when /質問/
+              user.update(question: true)
+              user.save
+              text = "早速質問しましょう！"
+              to_mid = from_mid
+            when /ありがとう/
+              user.update(question: false)
+              user.save
+            else
+              text = text_processor(user: user)
+              to_mid = to_mids
+            end
+            if res_flg
+              client.send_text(
+                to_mid: to_mid,
+                text: text,
+              )
+            end
+          when Line::Bot::Message::Sticker
+            user = User.where(mid: from_mid).first_or_initialize
+            user.save!
           end
         end
       end
@@ -44,12 +65,19 @@ module Line
         message
       end
 
-      def text_processor
+      def text_processor(opts = {})
         message = ""
+
+        text = data.content[:text]
+        message = opts[:user].question ? "【質問者】:#{text}" : text
+
+        message
       end
 
-      def to_mid
-        mids = User.all.map{|user| user.mid}
+      def to_mids
+        user = User.find_by(mid: from_mid)
+        region = user.region
+        mids = region.users.map{|member| member.mid}
         mids.delete(from_mid)
 
         mids
