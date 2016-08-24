@@ -14,12 +14,14 @@
 ActiveRecord::Schema.define(version: 20160824014359) do
 
   create_table "events", force: :cascade do |t|
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.date     "started_at"
+    t.date     "expired_at"
     t.text     "name",       limit: 65535
     t.string   "prefecture", limit: 255
     t.string   "city",       limit: 255
     t.text     "event_url",  limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "users", force: :cascade do |t|
