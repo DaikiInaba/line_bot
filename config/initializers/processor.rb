@@ -41,6 +41,12 @@ module Line
         message = ""
         message += "ご登録ありがとうございます！\n"
         message += "イベントを逃さず遊びつくしましょう！\n"
+        message += "今開催中のおすすめイベントはこちら！"
+
+        Event.all.each do |event|
+          message += "==================================\n"
+          message += "#{event.name}\n#{event.event_url}\n"
+        end
 
         message
       end
