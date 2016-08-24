@@ -27,11 +27,10 @@ module Line
         when Line::Bot::Receive::Message
           case data.content
           when Line::Bot::Message::Text
-            3.times do |i|
-              client.send_text(
-                to_mid: to_mid,
-                text: initial_processor(i),
-              )
+            client.send_text(
+              to_mid: to_mid,
+              text: text_processor,
+            )
             end
           end
         end
