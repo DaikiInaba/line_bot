@@ -33,7 +33,11 @@ module Line
             case data.content[:text]
             when /質問|聞きたい|について/
               unless user.questioner
-                user.switch_questioner
+                gimei = Gimei.name
+                user.questioner = true
+                user.name = gimei.last.katakana
+                user.save!
+
                 send_to_him("早速質問してみましょう！")
                 send_to_them("#{user.name}さんが困ってるみたい！みんな助けてあげてね！")
               else
