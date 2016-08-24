@@ -17,7 +17,7 @@ module Line
         when Line::Bot::Receive::Operation
           case data.content
           when Line::Bot::Operation::AddedAsFriend
-            3.times do
+            3.times do |i|
               client.send_text(
                 to_mid: to_mid,
                 text: initial_processor(i),
