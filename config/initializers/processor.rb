@@ -74,7 +74,7 @@ module Line
             message += "\n#{event.name}"
             message += "\n#{event.event_url}"
           end
-          messgage += "です"
+          message += "です"
         end
         message
       end
