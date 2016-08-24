@@ -65,7 +65,7 @@ module Line
         id = data.id
         endpoint_url = "https://trialbot-api.line.me/v1/bot/message/#{id}/content"
 
-        uri = URL.parse(endpoint_url)
+        uri = URI.parse(endpoint_url)
         https = Net::HTTP.new
         https.use_ssl = true
 
