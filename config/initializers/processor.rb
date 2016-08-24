@@ -6,7 +6,7 @@ require 'uri'
 module Line
   module Bot
     class Processor
-      attr_accessor :client, :data, :from_mid
+      attr_accessor :client, :data, :from_mid, :user
 
       def initialize(client, data)
         @client = client
