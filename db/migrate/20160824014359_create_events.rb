@@ -1,8 +1,8 @@
 class CreateEvents < ActiveRecord::Migration
   def change
     create_table :events do |t|
-      t.timestamps :started_at
-      t.timestamps :expired_at
+      t.date :started_at
+      t.date :expired_at
       t.text       :name
       t.string     :prefecture
       t.string     :city
