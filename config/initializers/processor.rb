@@ -47,9 +47,6 @@ module Line
       end
 
       def to_mid
-        user = User.where(mid: from_mid).first_or_initialize
-        user.save!
-
         mids = User.all.map{|user| user.mid}
         deleted_mids = mids.dup.delete(from_mid)
         mids = deleted_mids if deleted_mids.length > 0
