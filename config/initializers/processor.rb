@@ -52,6 +52,10 @@ module Line
         message += "イベントを逃さず遊びつくしましょう！\n"
         message += "今開催中のおすすめイベントはこちら！\n"
 
+        Event.all.each do |event|
+          message += 'a'
+        end
+
         message
       end
     end
