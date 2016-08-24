@@ -29,6 +29,12 @@ module Line
               to_mid: to_mid,
               text: data.content[:text],
             )
+          when Line::Bot::Message::Image
+            client.send_image(
+              to_mid: to_mid,
+              image_url: data.content[:originalContentUrl],
+              preview_url: data.content[:previewImageUrl],
+            )
           end
         end
       end
@@ -47,9 +53,6 @@ module Line
       end
 
       def to_mid
-        first = User.where(mid: from_mid).first_or_initialize
-        first.save!
-
         mids = User.all.map{|user| user.mid}
         mids.delete(from_mid)
 
