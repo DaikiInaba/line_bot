@@ -53,7 +53,7 @@ module Line
         message += "今開催中のおすすめイベントはこちら！\n"
 
         Event.all.each do |event|
-          message += 'a'
+          message += "#{event.name}\n"
         end
 
         message
