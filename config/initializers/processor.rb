@@ -17,46 +17,50 @@ module Line
         when Line::Bot::Receive::Operation
           case data.content
           when Line::Bot::Operation::AddedAsFriend
-            client.send_text(
-              to_mid: to_mid,
-              text: initial_processor,
-            )
+            3.times do
+              client.send_text(
+                to_mid: to_mid,
+                text: initial_processor(i),
+              )
+            end
           end
         when Line::Bot::Receive::Message
           case data.content
           when Line::Bot::Message::Text
-            client.send_text(
-              to_mid: to_mid,
-              text: text_processor,
-            )
+            3.times do
+              client.send_text(
+                to_mid: to_mid,
+                text: initial_processor(i),
+              )
+            end
           end
         end
       end
 
       private
-      def initial_processor
-        user = User.where(mid: to_mid).first_or_initialize
-        return if user.save!
-
+      def initial_processor(count)
         message = ""
-        message += "ご登録ありがとうございます！\n"
-        message += "イベントを逃さず遊びつくしましょう！\n"
-        message += "今開催中のおすすめイベントはこちら！\n"
+
+        case count
+        when 0
+          user = User.where(mid: to_mid).first_or_initialize
+          user.save!
+          message += "ご登録ありがとうございます！"
+          message += "\nイベントを逃さず遊びつくしましょう！"
+        when 1
+          message += "\n今開催中のおすすめイベントはこちら！"
+        when 2
+          Event.all.each do |event|
+            message += "\n---------------------------------------"
+            message += "\n#{event.name}"
+            message += "\n#{event.event_url}"
+          end
+        end
 
         message
       end
 
       def text_processor
-        message = ""
-        message += "ご登録ありがとうございます！\n"
-        message += "イベントを逃さず遊びつくしましょう！\n"
-        message += "今開催中のおすすめイベントはこちら！\n"
-
-        Event.all.each do |event|
-          message += "#{event.name}\n"
-        end
-
-        message
       end
     end
   end
