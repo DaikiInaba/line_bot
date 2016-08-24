@@ -43,12 +43,7 @@ module Line
         message += "イベントを逃さず遊びつくしましょう！\n"
         message += "今開催中のおすすめイベントはこちら！\n"
 
-        Event.all.each do |event|
-          message += "==================================\n"
-          message += "#{event.name}\n#{event.event_url}\n"
-        end
-
-        return message
+        message
       end
 
       def text_processor
