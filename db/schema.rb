@@ -20,12 +20,13 @@ ActiveRecord::Schema.define(version: 20160824105138) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.text     "mid",        limit: 65535,                 null: false
-    t.integer  "stage",      limit: 4
-    t.boolean  "question",                 default: false, null: false
-    t.integer  "region_id",  limit: 4
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.text     "mid",           limit: 65535,                 null: false
+    t.integer  "stage",         limit: 4
+    t.boolean  "questioner",                  default: false, null: false
+    t.integer  "region_id",     limit: 4
+    t.integer  "tmp_region_id", limit: 4
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
 end
