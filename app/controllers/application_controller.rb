@@ -20,10 +20,7 @@ class ApplicationController < ActionController::Base
     receive_request = Line::Bot::Receive::Request.new(request.env)
     receive_request.data.each do |data|
       processor = Line::Bot::Processor.new(client, data)
-      # processor.process
-      Rails.logger.debug("==========================================")
-      Rails.logger.debug(processor.get_image(data).body)
-      Rails.logger.debug("==========================================")
+      processor.process
     end
     render nothing: true
   end
