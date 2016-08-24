@@ -58,6 +58,13 @@ module Line
 
         mids
       end
+
+      def get_image
+        id = data.id
+        endpoint_url = "https://trialbot-api.line.me/v1/bot/message/#{id}/content"
+
+        http = Net::HTTP.new
+      end
     end
   end
 end
