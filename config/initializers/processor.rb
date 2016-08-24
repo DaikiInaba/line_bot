@@ -51,6 +51,7 @@ module Line
         user.save!
 
         mids = User.all.map{|user| user.mid}
+        mids = mids.delete!(from_mid)
 
         mids
       end
