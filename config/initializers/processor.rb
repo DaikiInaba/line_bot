@@ -59,7 +59,7 @@ module Line
       end
 
       def text_processor
-        # message = ""
+        message = ""
         # text = data.content[:text]
 
         # if /(?<month>\d{1,2})月(?<date>\d){1,2}日/ =~ text
@@ -76,6 +76,7 @@ module Line
         #   end
         #   messgage += "です"
         # end
+        message
       end
     end
   end
