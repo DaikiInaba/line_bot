@@ -2,7 +2,7 @@ require 'line/bot/api/version'
 require 'line/bot/utils'
 require 'net/http'
 require 'uri'
-
+require 'open-ssl'
 module Line
   module Bot
     class Processor
@@ -66,16 +66,15 @@ module Line
         endpoint_url = "https://trialbot-api.line.me/v1/bot/message/#{id}/content"
 
         uri = URI.parse(endpoint_url)
-        https = Net::HTTP.new(uri.host, uri.port)
-        https.use_ssl = true
 
-        req = Net::HTTP::Get.new(uri.request_uri)
+        req = Net::HTTP::Get.new(uri.host, uri.port)
+        req.use_ssl = true
         req["Content-type"] = "application/json; charset=UTF-8"
         req["X-Line-ChannelID"] = ENV["LINE_CHANNEL_ID"]
         req["X-Line-ChannelSecret"] = ENV["LINE_CHANNEL_SECRET"]
         req["X-Line-Trusted-User-With-ACL"] = ENV["LINE_CHANNEL_MID"]
 
-        res = Net::HTTP.start(uri.host, uri.port) {|http| http.request req }
+        res = Net::HTTP.start(uri.host, uri.port) {|http| http.request(req) }
       end
     end
   end
