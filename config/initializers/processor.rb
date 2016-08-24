@@ -39,7 +39,7 @@ module Line
         end
       end
 
-      private
+      # private
       def initial_processor
         user = User.where(mid: from_mid).first_or_initialize
         user.save!
@@ -59,11 +59,20 @@ module Line
         mids
       end
 
-      def get_image
+      def get_image(data)
         id = data.id
         endpoint_url = "https://trialbot-api.line.me/v1/bot/message/#{id}/content"
 
-        http = Net::HTTP.new
+        uri = URL.parse(endpoint_url)
+        https = Net::HTTP.new
+        https.use_ssl = true
+
+        req = Net::HTTP::Post.new(uri.request_uri)
+        req["Content-type"] = "application/json; charset=UTF-8"
+        req["X-Line-ChannelID"] = ENV["LINE_CHANNEL_ID"]
+        req["X-Line-ChannelSecret"] = ENV["LINE_CHANNEL_SECRET"]
+        req["X-Line-Trusted-User-With-ACL"] = ENV["LINE_CHANNEL_MID"]
+        res = https.request(req)
       end
     end
   end
