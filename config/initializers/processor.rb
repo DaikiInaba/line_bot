@@ -64,8 +64,9 @@ module Line
 
         if /(?<month>\d{1,2})月(?<date>\d){1,2}日/ =~ text
           year = Date.today.to_s
-          date = year + month + date
-          events = Event.where('started_at <= ?', date).where('expired_at >= ?', date)
+          search_date = year + month + date
+          Rails.logger.error(search_date)
+          events = Event.where('started_at <= ?', search_date).where('expired_at >= ?', search_date)
           return "#{month}月#{date}日に開催しているイベントはないみたいです..." if events.length == 0
 
           message += "#{month}月#{date}日に開催しているイベントは"
