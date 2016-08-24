@@ -30,7 +30,6 @@ module Line
         when Line::Bot::Receive::Message
           case data.content
           when Line::Bot::Message::Text
-            user = User.find_by(mid: from_mid)
             case data.content[:text]
             when /質問|聞きたい|について/
               unless user.questioner
