@@ -51,8 +51,7 @@ module Line
         user.save!
 
         mids = User.all.map{|user| user.mid}
-        deleted_mids = mids.delete(from_mid)
-        mids = deleted_mids if deleted_mids
+        mids.delete(from_mid)
 
         mids
       end
