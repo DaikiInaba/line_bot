@@ -1,5 +1,7 @@
 require 'line/bot/api/version'
 require 'line/bot/utils'
+require 'net/http'
+require 'uri'
 
 module Line
   module Bot
