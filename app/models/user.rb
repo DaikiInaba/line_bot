@@ -3,13 +3,13 @@ class User < ActiveRecord::Base
 
   def switch_questioner
     gimei = Gimei.name
-    if questioner
-      questioner = false
+    if self.questioner
+      self.questioner = false
     else
-      questioner = true
-      name = gimei.last.katakana
+      self.questioner = true
+      self.name = gimei.last.katakana
     end
 
-    save
+    self.save!
   end
 end
