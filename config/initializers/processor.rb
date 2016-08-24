@@ -31,7 +31,6 @@ module Line
               to_mid: to_mid,
               text: text_processor,
             )
-            end
           end
         end
       end
