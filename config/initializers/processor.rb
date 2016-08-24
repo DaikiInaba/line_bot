@@ -65,10 +65,12 @@ module Line
           case text
           when /[緊急]/
             message += "========================緊急========================"
-            message += "\n#{user.name}さん:#{text}"
+            message += "\n#{user.name}さん:"
+            message += "\n#{text}"
             message += "\n===================================================="
           else
-            message += "#{user.name}さん:#{text}"
+            message += "#{user.name}さん:"
+            message += "\n#{text}"
           end
         else
           message += text
