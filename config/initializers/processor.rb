@@ -62,7 +62,7 @@ module Line
         message = ""
         text = data.content[:text]
 
-        if /(?<month>\d{1,2})月(?<date>\d){1,2}日/ =~ text
+        if /(?<month>\d{1,2})月(?<date>\d{1,2})日/ =~ text
           year = Date.today.year.to_s
           search_date = year + month + date
           Rails.logger.error(search_date)
