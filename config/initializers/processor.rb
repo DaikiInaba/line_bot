@@ -4,12 +4,12 @@ require 'line/bot/utils'
 module Line
   module Bot
     class Processor
-      attr_accessor :client, :data, :to_mid
+      attr_accessor :client, :data, :from_mid
 
       def initialize(client, data)
         @client = client
         @data = data
-        @to_mid = data.from_mid
+        @from_mid = data.from_mid
       end
 
       def process
@@ -17,19 +17,17 @@ module Line
         when Line::Bot::Receive::Operation
           case data.content
           when Line::Bot::Operation::AddedAsFriend
-            3.times do |i|
-              client.send_text(
-                to_mid: to_mid,
-                text: initial_processor(i),
-              )
-            end
+            client.send_text(
+              to_mid: to_mid,
+              text: initial_processor,
+            )
           end
         when Line::Bot::Receive::Message
           case data.content
           when Line::Bot::Message::Text
             client.send_text(
               to_mid: to_mid,
-              text: text_processor,
+              text: data.content[:text],
             )
           end
         end
@@ -37,47 +35,21 @@ module Line
 
       private
       def initial_processor(count)
-        message = ""
+        user = User.where(mid: mid).first_or_initialize
+        user.save!
 
-        case count
-        when 0
-          user = User.where(mid: to_mid).first_or_initialize
-          user.save!
-          message += "ご登録ありがとうございます！"
-          message += "\nイベントを逃さず遊びつくしましょう！"
-        when 1
-          message += "\n今開催中のおすすめイベントはこちら！"
-        when 2
-          Event.all.each do |event|
-            message += "\n---------------------------------------"
-            message += "\n#{event.name}"
-            message += "\n#{event.event_url}"
-          end
-        end
-
+        message = "あなたをグループの一員として認めます！"
         message
       end
 
       def text_processor
         message = ""
-        text = data.content[:text]
+      end
 
-        if /(?<month>\d{1,2})月(?<date>\d{1,2})日/ =~ text
-          year = Date.today.year.to_s
-          search_date = year + month + date
-          Rails.logger.error(search_date)
-          events = Event.where('started_at <= ?', search_date).where('expired_at >= ?', search_date)
-          return "#{month}月#{date}日に開催しているイベントはないみたいです..." if events.length == 0
+      def to_mid
+        mids = User.all.map{|user| user.mid}
 
-          message += "#{month}月#{date}日に開催しているイベントは"
-          events.each do |event|
-            message += "\n---------------------------------------"
-            message += "\n#{event.name}"
-            message += "\n#{event.event_url}"
-          end
-          message += "です"
-        end
-        message
+        mids
       end
     end
   end
