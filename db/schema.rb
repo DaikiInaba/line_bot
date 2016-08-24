@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160824105138) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string   "name",          limit: 255
     t.text     "mid",           limit: 65535,                 null: false
     t.integer  "stage",         limit: 4
     t.boolean  "questioner",                  default: false, null: false
