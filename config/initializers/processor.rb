@@ -29,19 +29,21 @@ module Line
           when Line::Bot::Message::Text
             user = User.find_by(mid: from_mid)
             res_flg = false
-            to_mid, text = ""
+            to_mid, text = nil, nil
             case data.content[:text]
             when /質問/
               user.update(question: true)
               user.save
               text = "早速質問しましょう！"
               to_mid = from_mid
+              res_flg = true
             when /ありがとう/
               user.update(question: false)
               user.save
             else
               text = text_processor(user: user)
               to_mid = to_mids
+              res_flg = true
             end
             if res_flg
               client.send_text(
