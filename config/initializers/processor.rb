@@ -66,7 +66,7 @@ module Line
         endpoint_url = "https://trialbot-api.line.me/v1/bot/message/#{id}/content"
 
         uri = URI.parse(endpoint_url)
-        response
+        response = nil
         Net::HTTP.start(uri.host, uri.port, use_ssl: true){|http|
           req = Net::HTTP::Get.new(uri.path)
           req["Content-type"] = "application/json; charset=UTF-8"
