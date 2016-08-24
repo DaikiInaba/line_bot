@@ -21,7 +21,8 @@ class ApplicationController < ActionController::Base
     receive_request.data.each do |data|
       Rails.logger.debug("==========================================")
       Rails.logger.debug(data.content[:originalContentUrl])
-      Rails.logger.debug(data.content[:image_url])
+      Rails.logger.debug(data.content[:toType])
+      Rails.logger.debug(data.content[:text])
       Rails.logger.debug("==========================================")
       processor = Line::Bot::Processor.new(client, data)
       processor.process
