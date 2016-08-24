@@ -69,12 +69,13 @@ module Line
         https = Net::HTTP.new(uri.host, uri.port)
         https.use_ssl = true
 
-        req = Net::HTTP::Post.new(uri.request_uri)
+        req = Net::HTTP::Get.new(uri.request_uri)
         req["Content-type"] = "application/json; charset=UTF-8"
         req["X-Line-ChannelID"] = ENV["LINE_CHANNEL_ID"]
         req["X-Line-ChannelSecret"] = ENV["LINE_CHANNEL_SECRET"]
         req["X-Line-Trusted-User-With-ACL"] = ENV["LINE_CHANNEL_MID"]
-        res = https.request(req)
+
+        res = Net::HTTP.start(uri.host, uri.port) {|http| http.request req }
       end
     end
   end
