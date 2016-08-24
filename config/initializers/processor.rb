@@ -48,6 +48,7 @@ module Line
 
       def to_mid
         mids = User.all.map{|user| user.mid}
+        mids.delete(from_mid)
 
         mids
       end
