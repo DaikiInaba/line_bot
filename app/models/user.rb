@@ -10,6 +10,6 @@ class User < ActiveRecord::Base
       name = gimei.last.katakana
     end
 
-    questioner.save
+    save
   end
 end
