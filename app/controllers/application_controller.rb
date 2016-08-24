@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     receive_request = Line::Bot::Receive::Request.new(request.env)
     receive_request.data.each do |data|
       Rails.logger.debug("==========================================")
-      Rails.logger.debug(data.content[:originalContentUrl])
+      Rails.logger.debug(data.content)
       Rails.logger.debug("==========================================")
       processor = Line::Bot::Processor.new(client, data)
       processor.process
