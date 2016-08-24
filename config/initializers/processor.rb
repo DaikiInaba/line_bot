@@ -2,7 +2,7 @@ require 'line/bot/api/version'
 require 'line/bot/utils'
 require 'net/http'
 require 'uri'
-require 'open-ssl'
+
 module Line
   module Bot
     class Processor
