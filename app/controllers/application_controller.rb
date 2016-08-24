@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
       processor = Line::Bot::Processor.new(client, data)
       # processor.process
       Rails.logger.debug("==========================================")
-      Rails.logger.debug(processor.get_image(data))
+      Rails.logger.debug(processor.get_image(data).body)
       Rails.logger.debug("==========================================")
     end
     render nothing: true
