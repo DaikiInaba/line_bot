@@ -34,7 +34,7 @@ module Line
       end
 
       private
-      def initial_processor(count)
+      def initial_processor
         user = User.where(mid: from_mid).first_or_initialize
         user.save!
 
@@ -47,6 +47,9 @@ module Line
       end
 
       def to_mid
+        first = User.where(mid: from_mid).first_or_initialize
+        first.save!
+
         mids = User.all.map{|user| user.mid}
         mids.delete(from_mid)
 
