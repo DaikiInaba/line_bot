@@ -35,7 +35,7 @@ module Line
 
       private
       def initial_processor(count)
-        user = User.where(mid: mid).first_or_initialize
+        user = User.where(mid: from_mid).first_or_initialize
         user.save!
 
         message = "あなたをグループの一員として認めます！"
@@ -47,7 +47,7 @@ module Line
       end
 
       def to_mid
-        user = User.where(mid: mid).first_or_initialize
+        user = User.where(mid: from_mid).first_or_initialize
         user.save!
 
         mids = User.all.map{|user| user.mid}
