@@ -47,6 +47,12 @@ module Line
       end
 
       def text_processor
+        message = ""
+        message += "ご登録ありがとうございます！\n"
+        message += "イベントを逃さず遊びつくしましょう！\n"
+        message += "今開催中のおすすめイベントはこちら！\n"
+
+        message
       end
     end
   end
