@@ -131,8 +131,8 @@ module Line
         if user.stage == 4
           messages = BotMessage.find_by(stage: user.stage)
           messages.text.split("<section>").each do |message|
-            sleep 10 if message =~ /\.+/
             send_to_him(message)
+            sleep 5 if message =~ /\.+/
           end
         else
           message = BotMessage.find_by(stage: user.stage)
