@@ -79,7 +79,7 @@ module Line
               send_to_him("ふ～ん...#{region.name}によく行くのね")
             end
           when 1
-            length = text.match(/\d{1,2}/)
+            length = text.match(/\d{1,2}/).to_s.to_i
             case length
             when 12 .. Float::INFINITY
               send_to_him("あら、結構長いじゃない")
