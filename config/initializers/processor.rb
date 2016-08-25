@@ -253,7 +253,7 @@ module Line
 
         filename = SecureRandom.hex(13)
         image = Magick::Image.from_blob(response.body).first
-        preview = image.resize_to_fit[500, 10000]
+        preview = image.resize_to_fit(500, 10000)
 
         Aws.config.update(
           region: 'ap-northeast-1',
