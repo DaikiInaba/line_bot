@@ -168,7 +168,7 @@ module Line
       def to_mids
         region = user.region
         mids = region.users.map{|member| member.mid}
-        # mids.delete(from_mid)
+        mids.delete(from_mid)
 
         mids
       end
