@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer    :stage, null: false, default: 0
       t.boolean    :questioner, null: false, default: false
       t.references :region
-      t.references :tmp_region
+      t.references :tmp_region, default: 0
       t.timestamps null: false
     end
   end
