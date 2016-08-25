@@ -53,9 +53,9 @@ module Line
                 if user.questioner
                   send_to_them(text_processor)
                   user.switch_questioner
-                  user.switch_region
 
                   send_to_them "みんなのおかげで#{user.name}さんの悩みは解決したみたい！"
+                  user.switch_region
 
                   send_to_him "無事解決したみたいね！おかえりなさい！"
                   send_to_him "今度はあなたが#{user.region.name}について教えてあげる番よ！"
@@ -210,6 +210,7 @@ module Line
           tmp_users = region
                       .tmp_users
                       .to_a
+                      .delete_if{|member| member.mid == from_mid}
           mids = origin_users.concat(tmp_users).map{|member| member.mid}
         end
 
