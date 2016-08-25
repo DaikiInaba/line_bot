@@ -26,7 +26,7 @@ module Line
         when Line::Bot::Receive::Message
           case data.content
           when Line::Bot::Message::Text
-            if user.stage > 4
+            if user.stage > 5
               case text
               when /質問|聞きたい|について/
                 unless user.questioner
@@ -69,16 +69,17 @@ module Line
         if user.stage < 5
           # management
           case user.stage
-          when 0
+          when 1
             region = Region.find_by(name: text)
             unless region
               send_to_him("知らない場所だわ...ごめんなさい...")
+              send_to_him("もう一度聞いてもいいかしら？")
             else
               user.region = region
               user.increment!(:stage)
               send_to_him("ふ～ん...#{region.name}によく行くのね")
             end
-          when 1
+          when 2
             length = text.match(/\d{1,2}/).to_s.to_i
             case length
             when 12 .. Float::INFINITY
@@ -92,7 +93,7 @@ module Line
             end
 
             user.increment!(:stage) if length
-          when 2
+          when 3
             case text.length
             when 15 .. Float::INFINITY
               send_to_him("あら♪なかなかいい出会いじゃない♪")
@@ -102,7 +103,7 @@ module Line
             when 0 .. 10
               send_to_him("短すぎるわ！")
             end
-          when 3
+          when 4
             if text.length < 20
               send_to_him("短いわ！もっといろいろあるでしょう？")
               send_to_him("恥ずかしからずにちゃんと教えてちょうだい！")
@@ -110,7 +111,7 @@ module Line
               send_to_him("なかなか素敵な彼女みたいね♪")
               user.increment!(:stage)
             end
-          when 4
+          when 5
             user.increment!(:stage)
           end
 
@@ -121,6 +122,7 @@ module Line
             messages.text.split("<section>").each do |message|
               send_to_him(message)
             end
+            user.increment!(:stage)
           else
             message = BotMessage.find_by(stage: user.stage)
             send_to_him(message.text)
