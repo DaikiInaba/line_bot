@@ -244,9 +244,9 @@ module Line
         Net::HTTP.start(uri.host, uri.port, use_ssl: true){|http|
           req = Net::HTTP::Get.new(uri.path)
           req["Content-type"] = "application/json; charset=UTF-8"
-          req["X-Line-ChannelID"] = id
-          req["X-Line-ChannelSecret"] = secret
-          req["X-Line-Trusted-User-With-ACL"] = mid
+          req["X-Line-ChannelID"] = ENV["LINE_CHANNEL_ID"]
+          req["X-Line-ChannelSecret"] = ENV["LINE_CHANNEL_SECRET"]
+          req["X-Line-Trusted-User-With-ACL"] = ENV["LINE_CHANNEL_MID"]
           response = http.request(req)
         }
 
