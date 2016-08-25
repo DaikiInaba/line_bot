@@ -21,7 +21,7 @@ BotMessage.create(
 "ようこそ、迷える彼氏、略して迷彼Botへ！
 <section>
 まず、あなたが真の迷える彼氏なのか、私が見定めてあげるわ♪
-これからいろいろ質問するから、真剣に答えるのよ
+これからいろいろ質問するから、真剣に答えるのよ♪
 ",
   stage: 0
 )
@@ -38,16 +38,11 @@ BotMessage.create(
 )
 
 BotMessage.create(
-  text: "どこで出会ったのかしら？馴れ初めを詳しく教えてちょうだい？",
+  text: "馴れ初めを詳しく教えてちょうだい？",
   stage: 3
 )
 
 BotMessage.create(
-  text: "彼女のどんなところが好きなのかしら？",
-  stage: 4
-)
-
-BotMessage.create(
   text: "確かにあなたは迷える彼氏のようね！",
-  stage: 5
+  stage: 4
 )
