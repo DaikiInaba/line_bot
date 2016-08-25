@@ -26,7 +26,7 @@ module Line
         when Line::Bot::Receive::Message
           case data.content
           when Line::Bot::Message::Text
-            if user.stage < 5
+            if user.stage > 5
               case text
               when /質問|聞きたい|について/
                 unless user.questioner
@@ -44,7 +44,7 @@ module Line
                 send_to_them(text_processor)
               end
             else
-              send_to_him(initial_processor)
+              initial_processor
             end
           when Line::Bot::Message::Sticker
             client.send_sticker(
