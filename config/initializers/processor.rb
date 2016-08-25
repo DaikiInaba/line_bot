@@ -26,7 +26,7 @@ module Line
         when Line::Bot::Receive::Message
           case data.content
           when Line::Bot::Message::Text
-            if user.stage > 5
+            if user.stage > 4
               case text
               when /質問|聞きたい|について/
                 unless user.questioner
@@ -122,8 +122,6 @@ module Line
             send_to_him("なかなか素敵な彼女みたいね♪")
             user.increment!(:stage)
           end
-        when 5
-          user.increment!(:stage)
         end
 
         # management
