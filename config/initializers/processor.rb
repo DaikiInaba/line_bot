@@ -3,6 +3,7 @@ require 'line/bot/utils'
 require 'net/http'
 require 'uri'
 require 'aws-sdk'
+require 'RMagick'
 
 module Line
   module Bot
@@ -251,6 +252,8 @@ module Line
         }
 
         filename = SecureRandom.hex(13)
+        image = Magick::Image.from_blob(response.body).first
+        preview = image.resize(0.5)
 
         Aws.config.update(
           region: 'ap-northeast-1',
@@ -261,10 +264,15 @@ module Line
 
         s3.put_object(
           body: response.body,
-          key: "#{filename}.png"
+          key: "line/original/#{filename}.png"
         )
 
-        return "https://s3-ap-northeast-1.amazonaws.com/proto-storage/#{filename}.png"
+        s3.put_object(
+          body: preview.to_blob,
+          key: "line/preview/#{filename}.jpg"
+        )
+
+        return ["https://s3-ap-northeast-1.amazonaws.com/proto-storage/line/original/#{filename}.png", "https://s3-ap-northeast-1.amazonaws.com/proto-storage/line/preview/#{filename}.jpg"]
       end
     end
   end
