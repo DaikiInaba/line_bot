@@ -49,7 +49,6 @@ module Line
 
                       send_to_him("#{region_name}に連れてきたわよ！さっそくみんなに質問してみましょう！")
                       send_to_them("#{user.name}さんが困ってるみたい！みんな助けてあげてね！")
-                    else
                     end
                   else
                     send_to_him("どこのことを質問したいのかしら？\n「渋谷で質問」みたいに教えてくれると嬉しいわ。")
