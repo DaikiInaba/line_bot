@@ -101,13 +101,13 @@ module Line
 
           case length
           when 12 .. Float::INFINITY
-            send_to_him("あら、結構長いじゃない")
+            send_to_him("結構長いのね。後輩たちにいろいろ教えてあげてちょうだい。")
           when 3 .. 12
-            send_to_him("彼氏歴もそこそこね")
+            send_to_him("彼氏歴もそこそこって感じかしら？")
           when 0 .. 3
-            send_to_him("新米彼氏さんなのね")
+            send_to_him("新米さんなのね。ここで先輩にいろいろ聞いてみるといいわよ。")
           else
-            send_to_him("恥ずかしがらずにちゃんと答えなさい！")
+            send_to_him("ごめんなさい。ちょっとわからないわ。もう一度教えてくれるかしら？")
           end
 
           if length
@@ -117,19 +117,27 @@ module Line
         when 3
           case text.length
           when 15 .. Float::INFINITY
-            send_to_him("あら♪なかなかいい出会いじゃない♪")
+            send_to_him("あら！なかなかいい出会いじゃない！")
             msg_flg =  true
             user.increment!(:stage)
           when 10 .. 15
-            send_to_him("もう少し詳しく教えてちょうだい？")
+            send_to_him("もう少し詳しく教えてくれるかしら？")
           when 0 .. 10
-            send_to_him("短すぎるわ！")
+            send_to_him("さすがに短すぎるわね...もっといろいろあるんじゃないかしら？")
           end
         end
 
         # management
-        message = BotMessage.find_by(stage: user.stage)
-        send_to_him(message.text) if msg_flg
+        if user.stage == 4
+          messages = BotMessage.find_by(stage: user.stage)
+          messages.text.split("<section>").each do |message|
+            sleep 10 if message ==  "........."
+            send_to_him(message)
+          end
+        else
+          message = BotMessage.find_by(stage: user.stage)
+          send_to_him(message.text) if msg_flg
+        end
       end
 
       def text_processor
