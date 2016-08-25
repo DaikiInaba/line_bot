@@ -38,11 +38,12 @@ module Line
                     when nil
                       send_to_him("そこについて詳しい人はまだいないみたい...力になれずごめんなさい...")
                     when user.region
-                      send_to_him("あなたも#{user.region}のことで知らないことがあるのね...")
+                      user.switch_questioner
+
+                      send_to_him("あなたも#{region.name}のことで知らないことがあるのね...")
                       send_to_him("いいわよ！存分に質問しなさい！")
                       send_to_them("#{user.name}さんが困ってるみたい！みんな助けてあげてね！")
 
-                      user.switch_questioner
                     else
                       user.switch_questioner
                       user.switch_region(region: region)

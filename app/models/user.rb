@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
       self.questioner = false
     else
       self.questioner = true
-      self.name = gimei.last.katakana
+      self.name = gimei.last.hiragana
     end
 
     self.save!
