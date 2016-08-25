@@ -1,5 +1,8 @@
 require 'line/bot/api/version'
 require 'line/bot/utils'
+require 'net/http'
+require 'uri'
+require 'aws-sdk'
 
 module Line
   module Bot
@@ -76,6 +79,13 @@ module Line
             else
               initial_processor
             end
+          when Line::Bot::Message::Image
+            image_url = get_image
+            client.send_image(
+              to_mid: from_mid,
+              image_url: image_url,
+              preview_url: image_url
+            )
           when Line::Bot::Message::Sticker
             client.send_sticker(
               to_mid: to_mids,
@@ -223,6 +233,38 @@ module Line
         end
 
         mids
+      end
+
+      def get_image
+        endpoint_url = "https://trialbot-api.line.me/v1/bot/message/#{data.id}/content"
+        response = nil
+        file = nil
+
+        uri = URI.parse(endpoint_url)
+        Net::HTTP.start(uri.host, uri.port, use_ssl: true){|http|
+          req = Net::HTTP::Get.new(uri.path)
+          req["Content-type"] = "application/json; charset=UTF-8"
+          req["X-Line-ChannelID"] = id
+          req["X-Line-ChannelSecret"] = secret
+          req["X-Line-Trusted-User-With-ACL"] = mid
+          response = http.request(req)
+        }
+
+        filename = SecureRandom.hex(13)
+
+        Aws.config.update(
+          region: 'ap-northeast-1',
+          credentials: Aws::Credentials.new(ENV['AWS_ACCESS_ID'], ENV['AWS_SECRET_KEY'])
+        )
+
+        s3 =Aws::S3::Resource.new.bucket('proto-storage')
+
+        s3.put_object(
+          body: response.body,
+          key: "filename.png"
+        )
+
+        return "https://s3-ap-northeast-1.amazonaws.com/proto-storage/#{filename}.png"
       end
     end
   end
