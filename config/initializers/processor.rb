@@ -59,7 +59,7 @@ module Line
 
       private
       def initial_processor
-        if data.context[:text] == "更新"
+        if text == "更新"
           user.stage = 0
           user.save
         end
