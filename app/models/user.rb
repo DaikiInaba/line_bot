@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :region
+  belongs_to :tmp_region, class_name: "Region"
 
   def switch_questioner
     gimei = Gimei.name
@@ -15,9 +16,9 @@ class User < ActiveRecord::Base
 
   def switch_region(opts = {})
     if opts[:region]
-      self.tmp_region_id = opts[:region].id
+      self.tmp_region = opts[:region]
     else
-      self.tmp_region_id = 0
+      self.tmp_region = nil
     end
 
     self.save!

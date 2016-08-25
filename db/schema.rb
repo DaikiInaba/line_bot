@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20160825053537) do
     t.integer  "stage",         limit: 4,     default: 0,     null: false
     t.boolean  "questioner",                  default: false, null: false
     t.integer  "region_id",     limit: 4
-    t.integer  "tmp_region_id", limit: 4
+    t.integer  "tmp_region_id", limit: 4,     default: 0
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
   end

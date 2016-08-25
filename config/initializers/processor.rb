@@ -194,17 +194,24 @@ module Line
       end
 
       def to_mids
-        if user.tmp_region_id != 0
-          region = Region.find(user.tmp_region_id)
-        else
-          region = user.region
-        end
+        region = user.tmp_region ? user.tmp_region : user.region
 
-        mids = region
-               .users
-               .to_a
-               .delete_if{|member| member.tmp_region_id != 0 || member.mid == from_mid}
-               .map{|member| member.mid}
+        if user.questioner
+          mids = region
+                 .users
+                 .to_a
+                 .delete_if{|member| member.tmp_region_id != nil || member.mid == from_mid}
+                 .map{|member| member.mid}
+        else
+          origin_users = region
+                        .users
+                        .to_a
+                        .delete_if{|member| member.tmp_region_id != nil || member.mid == from_mid}
+          tmp_users = region
+                      .tmp_users
+                      .to_a
+          mids = origin_users.concat(tmp_users).map{|member| member.mid}
+        end
 
         mids
       end
