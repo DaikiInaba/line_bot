@@ -66,76 +66,69 @@ module Line
         end
 
         message = ""
-
-        if user.stage < 5
           # management
-          case user.stage
-          when 1
-            region = Region.find_by(name: text)
-            unless region
-              send_to_him("知らない場所だわ...ごめんなさい...")
-              send_to_him("もう一度聞いてもいいかしら？")
-            else
-              user.region = region
-              user.increment!(:stage)
-              send_to_him("ふ～ん...#{region.name}によく行くのね")
-            end
-          when 2
-            if text =~ /年/
-              length = 100
-            else
-              length = text.match(/\d{1,2}/)
-              length = length.to_s.to_i if length
-            end
-
-            case length
-            when 12 .. Float::INFINITY
-              send_to_him("あら、結構長いじゃない")
-            when 3 .. 12
-              send_to_him("彼氏歴もそこそこね")
-            when 0 .. 3
-              send_to_him("新米彼氏さんなのね")
-            else
-              send_to_him("恥ずかしがらずにちゃんと答えなさい！")
-            end
-
-            user.increment!(:stage) if length
-          when 3
-            case text.length
-            when 15 .. Float::INFINITY
-              send_to_him("あら♪なかなかいい出会いじゃない♪")
-              user.increment!(:stage)
-            when 10 .. 15
-              send_to_him("もう少し詳しく教えてちょうだい？")
-            when 0 .. 10
-              send_to_him("短すぎるわ！")
-            end
-          when 4
-            if text.length < 20
-              send_to_him("短いわ！もっといろいろあるでしょう？")
-              send_to_him("恥ずかしからずにちゃんと教えてちょうだい！")
-            else
-              send_to_him("なかなか素敵な彼女みたいね♪")
-              user.increment!(:stage)
-            end
-          when 5
-            user.increment!(:stage)
+        case user.stage
+        when 0
+          messages = BotMessage.find_by(stage: user.stage)
+          messages.text.split("<section>").each do |message|
+            send_to_him(message)
           end
-
-          # management
-          case user.stage
-          when 0
-            messages = BotMessage.find_by(stage: user.stage)
-            messages.text.split("<section>").each do |message|
-              send_to_him(message)
-            end
-            user.increment!(:stage)
+          user.increment!(:stage)
+        when 1
+          region = Region.find_by(name: text)
+          unless region
+            send_to_him("知らない場所だわ...ごめんなさい...")
+            send_to_him("もう一度聞いてもいいかしら？")
           else
-            message = BotMessage.find_by(stage: user.stage)
-            send_to_him(message.text)
+            user.region = region
+            user.increment!(:stage)
+            send_to_him("ふ～ん...#{region.name}によく行くのね")
           end
-        else
+        when 2
+          if text =~ /年/
+            length = 100
+          else
+            length = text.match(/\d{1,2}/)
+            length = length.to_s.to_i if length
+          end
+
+          case length
+          when 12 .. Float::INFINITY
+            send_to_him("あら、結構長いじゃない")
+          when 3 .. 12
+            send_to_him("彼氏歴もそこそこね")
+          when 0 .. 3
+            send_to_him("新米彼氏さんなのね")
+          else
+            send_to_him("恥ずかしがらずにちゃんと答えなさい！")
+          end
+
+          user.increment!(:stage) if length
+        when 3
+          case text.length
+          when 15 .. Float::INFINITY
+            send_to_him("あら♪なかなかいい出会いじゃない♪")
+            user.increment!(:stage)
+          when 10 .. 15
+            send_to_him("もう少し詳しく教えてちょうだい？")
+          when 0 .. 10
+            send_to_him("短すぎるわ！")
+          end
+        when 4
+          if text.length < 20
+            send_to_him("短いわ！もっといろいろあるでしょう？")
+            send_to_him("恥ずかしからずにちゃんと教えてちょうだい！")
+          else
+            send_to_him("なかなか素敵な彼女みたいね♪")
+            user.increment!(:stage)
+          end
+        when 5
+          user.increment!(:stage)
         end
+
+        # management
+        message = BotMessage.find_by(stage: user.stage)
+        send_to_him(message.text)
       end
 
       def text_processor
