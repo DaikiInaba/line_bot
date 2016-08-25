@@ -200,8 +200,11 @@ module Line
           region = user.region
         end
 
-        mids = region.users.map{|member| member.mid}
-        mids.delete(from_mid)
+        mids = region
+               .users
+               .to_a
+               .delete_if{|member| member.tmp_region_id != 0 || member.mid == from_mid}
+               .map{|member| member.mid}
 
         mids
       end
