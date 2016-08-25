@@ -84,8 +84,8 @@ module Line
             image_url = get_image
             client.send_image(
               to_mid: from_mid,
-              image_url: image_url,
-              preview_url: image_url
+              image_url: image_url[0],
+              preview_url: image_url[1]
             )
           when Line::Bot::Message::Sticker
             client.send_sticker(
