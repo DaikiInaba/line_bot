@@ -14,9 +14,9 @@ regions.each do |region|
   data.save
 end
 
-# create message
+# create BotMessage
 
-Message.create(
+BotMessage.create(
   text:
 "ようこそ、迷える彼氏、略して迷彼Botへ！
 <section>
@@ -28,22 +28,22 @@ Message.create(
 )
 
 
-Message.create(
+BotMessage.create(
   text: "今の彼女とは付き合い始めて何ヶ月なの？",
   stage: 1
 )
 
-Message.create(
+BotMessage.create(
   text: "どこで出会ったのかしら？馴れ初めを詳しく教えてちょうだい？",
   stage: 2
 )
 
-Message.create(
+BotMessage.create(
   text: "彼女のどんなところが好きなのかしら？",
   stage: 3
 )
 
-Message.create(
+BotMessage.create(
   text: "確かにあなたは迷える彼氏のようね！",
   stage: 4
 )

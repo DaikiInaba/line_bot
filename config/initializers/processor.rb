@@ -117,12 +117,12 @@ module Line
           # management
           case user.stage
           when 0
-            messages = Message.find_by(stage: user.stage)
+            messages = BotMessage.find_by(stage: user.stage)
             messages.split("<section>").each do |message|
               send_to_him(message)
             end
           else
-            message = Message.find_by(stage: user.stage)
+            message = BotMessage.find_by(stage: user.stage)
             send_to_him(message.text)
           end
         else
