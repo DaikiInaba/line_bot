@@ -37,6 +37,7 @@ module Line
                   send_to_them(text_processor)
                 end
               when /ありがとう/
+                send_to_them(text_processor)
                 user.switch_questioner if user.questioner
                 send_to_him "解決したみたいね！おめでとう！"
                 send_to_them "みんなのおかげで#{user.name}さんの悩みは解決したみたい！"
@@ -80,7 +81,13 @@ module Line
               send_to_him("ふ～ん...#{region.name}によく行くのね")
             end
           when 2
-            length = text.match(/\d{1,2}/).to_s.to_i
+            if text =~ /年/
+              length = 100
+            else
+              length = text.match(/\d{1,2}/)
+              length = length.to_s.to_i if length
+            end
+
             case length
             when 12 .. Float::INFINITY
               send_to_him("あら、結構長いじゃない")

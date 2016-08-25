@@ -22,28 +22,32 @@ BotMessage.create(
 <section>
 まず、あなたが真の迷える彼氏なのか、私が見定めてあげるわ♪
 これからいろいろ質問するから、真剣に答えるのよ
-<section>
-まず、あなたが彼女とよく行く場所を教えてちょうだい",
+",
   stage: 0
+)
+
+BotMessage.create(
+  text: "彼女とよく行く場所を教えてくれる？",
+  stage: 1
 )
 
 
 BotMessage.create(
   text: "今の彼女とは付き合い始めて何ヶ月なの？",
-  stage: 1
-)
-
-BotMessage.create(
-  text: "どこで出会ったのかしら？馴れ初めを詳しく教えてちょうだい？",
   stage: 2
 )
 
 BotMessage.create(
-  text: "彼女のどんなところが好きなのかしら？",
+  text: "どこで出会ったのかしら？馴れ初めを詳しく教えてちょうだい？",
   stage: 3
 )
 
 BotMessage.create(
-  text: "確かにあなたは迷える彼氏のようね！",
+  text: "彼女のどんなところが好きなのかしら？",
   stage: 4
+)
+
+BotMessage.create(
+  text: "確かにあなたは迷える彼氏のようね！",
+  stage: 5
 )
