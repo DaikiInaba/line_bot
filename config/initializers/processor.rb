@@ -28,11 +28,24 @@ module Line
           when Line::Bot::Message::Text
             if user.stage > 3
               case text
-              when /質問|聞きたい|について/
+              when /\p{Han}+(で|について|を)質問/
                 unless user.questioner
-                  user.switch_questioner
-                  send_to_him("早速質問してみましょう！")
-                  send_to_them("#{user.name}さんが困ってるみたい！みんな助けてあげてね！")
+                  region_name = text.match(/\p{Han}+(?=(で|について|を)質問)/)
+                  if region_name
+                    region_name = region_name.to_s
+                    region = Region.find_by(name: region_name)
+                    if region
+                      user.switch_region(region: region)
+                      user.switch_questioner
+
+                      send_to_him("あなたを#{region_name}に招待したわ！さっそくみんなに質問してみましょう！")
+                      send_to_them("#{user.name}さんが困ってるみたい！みんな助けてあげてね！")
+                    else
+                      send_to_him("そこについて詳しい人はまだいないみたい...力になれずごめんなさい...")
+                    end
+                  else
+                    send_to_him("どこのことを質問したいのかしら？\n「渋谷で質問」みたいに教えてくれると嬉しいわ。")
+                  end
                 else
                   send_to_them(text_processor)
                 end
@@ -40,8 +53,12 @@ module Line
                 if user.questioner
                   send_to_them(text_processor)
                   user.switch_questioner if user.questioner
-                  send_to_him "解決したみたいね！おめでとう！"
+
                   send_to_them "みんなのおかげで#{user.name}さんの悩みは解決したみたい！"
+                  user.switch_region
+
+                  send_to_him "無事解決したみたいね！おかえりなさい！"
+                  send_to_him "今度はあなたは#{user.region.name}について教えてあげる番よ！"
                 else
                   send_to_them(text_processor)
                 end
@@ -177,7 +194,7 @@ module Line
       end
 
       def to_mids
-        region = user.region
+        region = user.tmp_region_id ? Region.find_by(user.tmp_region_id) : user.region
         mids = region.users.map{|member| member.mid}
         mids.delete(from_mid)
 
