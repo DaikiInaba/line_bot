@@ -52,13 +52,13 @@ module Line
               when /ありがとう/
                 if user.questioner
                   send_to_them(text_processor)
-                  user.switch_questioner if user.questioner
-
-                  send_to_them "みんなのおかげで#{user.name}さんの悩みは解決したみたい！"
+                  user.switch_questioner
                   user.switch_region
 
+                  send_to_them "みんなのおかげで#{user.name}さんの悩みは解決したみたい！"
+
                   send_to_him "無事解決したみたいね！おかえりなさい！"
-                  send_to_him "今度はあなたは#{user.region.name}について教えてあげる番よ！"
+                  send_to_him "今度はあなたが#{user.region.name}について教えてあげる番よ！"
                 else
                   send_to_them(text_processor)
                 end
