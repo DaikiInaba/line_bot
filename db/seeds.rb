@@ -13,3 +13,37 @@ regions.each do |region|
   data = Region.where(name: region).first_or_initialize
   data.save
 end
+
+# create message
+
+Message.create(
+  text:
+"ようこそ、迷える彼氏、略して迷彼Botへ！
+<section>
+まず、あなたが真の迷える彼氏なのか、私が見定めてあげるわ♪
+これからいろいろ質問するから、真剣に答えるのよ
+<section>
+まず、あなたが彼女とよく行く場所を教えてちょうだい",
+  stage: 0
+)
+
+
+Message.create(
+  text: "今の彼女とは付き合い始めて何ヶ月なの？",
+  stage: 1
+)
+
+Message.create(
+  text: "どこで出会ったのかしら？馴れ初めを詳しく教えてちょうだい？",
+  stage: 2
+)
+
+Message.create(
+  text: "彼女のどんなところが好きなのかしら？",
+  stage: 3
+)
+
+Message.create(
+  text: "確かにあなたは迷える彼氏のようね！",
+  stage: 4
+)
