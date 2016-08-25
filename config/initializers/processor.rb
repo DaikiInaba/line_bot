@@ -37,10 +37,14 @@ module Line
                   send_to_them(text_processor)
                 end
               when /ありがとう/
-                send_to_them(text_processor)
-                user.switch_questioner if user.questioner
-                send_to_him "解決したみたいね！おめでとう！"
-                send_to_them "みんなのおかげで#{user.name}さんの悩みは解決したみたい！"
+                if user.questioner
+                  send_to_them(text_processor)
+                  user.switch_questioner if user.questioner
+                  send_to_him "解決したみたいね！おめでとう！"
+                  send_to_them "みんなのおかげで#{user.name}さんの悩みは解決したみたい！"
+                else
+                  send_to_them(text_processor)
+                end
               else
                 send_to_them(text_processor)
               end
