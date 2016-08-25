@@ -26,7 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'line-bot-api'
 gem 'gimei'
 gem 'aws-sdk'
-gem 'RMagick'
+gem 'rmagick', require: 'RMagick'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
