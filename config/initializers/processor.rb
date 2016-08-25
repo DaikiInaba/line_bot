@@ -30,18 +30,26 @@ module Line
               case text
               when /質問/
                 unless user.questioner
-                  region_name = text.match(/\p{Han}+(?=(で|について|を)質問)/)
+                  region_name = text.match(/\p{Han}+(?=(\p{Hiragana}+)質問)/)
                   if region_name
                     region_name = region_name.to_s
                     region = Region.find_by(name: region_name)
-                    if region
+                    case region
+                    when nil
+                      send_to_him("そこについて詳しい人はまだいないみたい...力になれずごめんなさい...")
+                    when user.region
+                      send_to_him("あなたも#{user.region}のことで知らないことがあるのね...")
+                      send_to_him("いいわよ！存分に質問しなさい！")
+                      send_to_them("#{user.name}さんが困ってるみたい！みんな助けてあげてね！")
+
+                      user.switch_questioner
+                    else
                       user.switch_questioner
                       user.switch_region(region: region)
 
-                      send_to_him("あなたを#{region_name}に招待したわ！さっそくみんなに質問してみましょう！")
+                      send_to_him("#{region_name}に連れてきたわよ！さっそくみんなに質問してみましょう！")
                       send_to_them("#{user.name}さんが困ってるみたい！みんな助けてあげてね！")
                     else
-                      send_to_him("そこについて詳しい人はまだいないみたい...力になれずごめんなさい...")
                     end
                   else
                     send_to_him("どこのことを質問したいのかしら？\n「渋谷で質問」みたいに教えてくれると嬉しいわ。")
@@ -57,7 +65,7 @@ module Line
                   send_to_them "みんなのおかげで#{user.name}さんの悩みは解決したみたい！"
                   user.switch_region
 
-                  send_to_him "無事解決したみたいね！おかえりなさい！"
+                  send_to_him "おかえりなさい！無事解決したみたいね！"
                   send_to_him "今度はあなたが#{user.region.name}について教えてあげる番よ！"
                 else
                   send_to_them(text_processor)
@@ -196,7 +204,7 @@ module Line
       def to_mids
         region = user.tmp_region ? user.tmp_region : user.region
 
-        if user.questioner
+        if user.tmp_region
           mids = region
                  .users
                  .to_a
