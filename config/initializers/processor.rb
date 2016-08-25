@@ -118,7 +118,7 @@ module Line
           case user.stage
           when 0
             messages = BotMessage.find_by(stage: user.stage)
-            messages.split("<section>").each do |message|
+            messages.text.split("<section>").each do |message|
               send_to_him(message)
             end
           else
