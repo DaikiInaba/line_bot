@@ -28,15 +28,15 @@ module Line
           when Line::Bot::Message::Text
             if user.stage > 3
               case text
-              when /\p{Han}+(で|について|を)質問/
+              when /質問/
                 unless user.questioner
                   region_name = text.match(/\p{Han}+(?=(で|について|を)質問)/)
                   if region_name
                     region_name = region_name.to_s
                     region = Region.find_by(name: region_name)
                     if region
-                      user.switch_region(region: region)
                       user.switch_questioner
+                      user.switch_region(region: region)
 
                       send_to_him("あなたを#{region_name}に招待したわ！さっそくみんなに質問してみましょう！")
                       send_to_them("#{user.name}さんが困ってるみたい！みんな助けてあげてね！")
