@@ -101,7 +101,7 @@ module Line
 
           case length
           when 12 .. Float::INFINITY
-            send_to_him("結構長いのね。後輩たちにいろいろ教えてあげてちょうだい。")
+            send_to_him("結構長いのね。ぜひ後輩たちにいろいろ教えてあげてちょうだい！")
           when 3 .. 12
             send_to_him("彼氏歴もそこそこって感じかしら？")
           when 0 .. 3
