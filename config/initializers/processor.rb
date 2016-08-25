@@ -261,7 +261,7 @@ module Line
 
         s3.put_object(
           body: response.body,
-          key: "filename.png"
+          key: "#{filename}.png"
         )
 
         return "https://s3-ap-northeast-1.amazonaws.com/proto-storage/#{filename}.png"
