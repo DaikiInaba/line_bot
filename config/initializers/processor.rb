@@ -194,7 +194,7 @@ module Line
       end
 
       def to_mids
-        region = user.tmp_region_id == 0 ? user.region : Region.find_by(user.tmp_region_id)
+        region = user.region
         mids = region.users.map{|member| member.mid}
         mids.delete(from_mid)
 
