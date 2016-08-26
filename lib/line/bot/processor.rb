@@ -250,7 +250,7 @@ module Line
         s3 =Aws::S3::Resource.new.bucket('proto-storage')
 
         s3.put_object(
-          body: response.body,
+          body: image_data,
           key: "line/original/#{filename}.png"
         )
 
