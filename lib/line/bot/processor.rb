@@ -41,6 +41,7 @@ module Line
                     case region
                     when nil
                       send_to_him("そこについて詳しい人はまだいないみたい...力になれずごめんなさい...")
+                      send_sticker_to_him(2, 174, 100)
                     when user.region
                       user.switch_questioner
 
@@ -100,11 +101,6 @@ module Line
 
       private
       def initial_processor
-        if text == "更新"
-          user.stage = 0
-          user.save
-        end
-
         message = ""
         msg_flg = false
           # management
@@ -120,12 +116,14 @@ module Line
           region = Region.find_by(name: text)
           unless region
             send_to_him("知らない場所だわ...ごめんなさい...")
+            send_sticker_to_him(2, 174, 100)
             send_to_him("もう一度聞いてもいいかしら？")
           else
             user.region = region
             msg_flg = true
             user.increment!(:stage)
             send_to_him("ふ～ん...#{region.name}によく行くのね")
+            send_sticker_to_him(1, 10, 100)
           end
         when 2
           if text =~ /年/
@@ -154,6 +152,7 @@ module Line
           case text.length
           when 15 .. Float::INFINITY
             send_to_him("あら！なかなかいい出会いじゃない！")
+            send_to_him(2, 172, 100)
             msg_flg =  true
             user.increment!(:stage)
           when 10 .. 15
@@ -212,6 +211,15 @@ module Line
         )
       end
 
+      def send_sticker_to_him(stkpkgid, stkid, stkver)
+        client.send_sticker(
+          to_mid: from_mid,
+          stkpkgid: stkpkgid,
+          stkid: stkid,
+          stkver: stkver,
+        )
+      end
+
       def to_mids
         region = user.tmp_region ? user.tmp_region : user.region
 
@@ -237,8 +245,9 @@ module Line
       end
 
       def image_urls
-        image_data = client.get_message_content(data.id).body
         filename = SecureRandom.hex(13)
+
+        image_data = client.get_message_content(data.id).body
         image = Magick::Image.from_blob(image_data).first
         preview = image.columns > 500 ? image.resize_to_fit(500, 10000) : image
 
