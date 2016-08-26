@@ -77,7 +77,7 @@ module Line
                 end
               when /使い方忘れた/
                 send_to_him "使い方忘れちゃったの？仕方ないわね..."
-                send_to_him "困ったときは「#{user.region.name}」みたいに言うのよ。"
+                send_to_him "困ったときは「#{user.region.name}で質問」みたいに言うのよ。"
                 send_to_him "解決したら「ありがとう」。お礼は基本ね。"
                 send_to_him "すぐに答えてもらいたいときは、質問の前に「[緊急]」ってつけるといいわ。"
                 send_to_him "これで全部よ！今度はしっかり覚えておいてちょうだいね？"
