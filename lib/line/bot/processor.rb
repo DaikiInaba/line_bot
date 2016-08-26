@@ -167,7 +167,7 @@ module Line
           messages = BotMessage.find_by(stage: user.stage)
           messages.text.split("<section>").each do |message|
             send_to_him(message)
-            sleep 3 if message =~ /\.+/
+            sleep 2 if message =~ /\.+/
           end
         else
           message = BotMessage.find_by(stage: user.stage)
