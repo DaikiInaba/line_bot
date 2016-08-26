@@ -8,7 +8,7 @@
 
 # create Event
 
-regions = ["渋谷", "新宿", "原宿/表参道", "池袋", "吉祥寺", "品川", "お台場", "銀座", "東京", "上野"]
+regions = ["渋谷", "新宿", "原宿", "池袋", "吉祥寺", "品川", "お台場", "銀座", "東京", "上野"]
 regions.each do |region|
   data = Region.where(name: region).first_or_initialize
   data.save
@@ -22,7 +22,7 @@ BotMessage.create(
 )
 
 BotMessage.create(
-  text: "まず、彼女とよく行く場所を聞いてもいいかしら？",
+  text: "まず、彼女とよく行く場所を聞いてもいいかしら？\n(渋谷, 新宿, 銀座のどれかでお願いします)",
   stage: 1
 )
 
@@ -38,6 +38,6 @@ BotMessage.create(
 )
 
 BotMessage.create(
-  text: "質問はこれで全部よ！ちゃんと答えてくれて嬉しいわ！<section>あなたが迷彼の仲間としてふさわしいか、少し考えさせてくれるかしら？<section>.........<section>.........<section>待たせたわね。\nあなたは迷彼の仲間としてふさわしいと思うわ。<section>これからは同じ迷彼として、お互いに相談してみんなが幸せになることを祈っているわ",
+  text: "質問はこれで全部よ！ちゃんと答えてくれて嬉しいわ！<section>あなたが迷彼の仲間としてふさわしいか、少し考えさせてくれるかしら？<section>.........<section>.........<section>待たせたわね。\nあなたは迷彼の仲間としてふさわしいと思うわ。<section>これからは同じ迷彼として、お互いに相談してみんなが幸せになることを祈っているわ<section>(本来はここに使い方挟みます)",
   stage: 4
 )
