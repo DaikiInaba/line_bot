@@ -237,7 +237,7 @@ module Line
       end
 
       def image_urls
-        image_data = client.get_message_content(data.id)
+        image_data = client.get_message_content(data.id).body
         filename = SecureRandom.hex(13)
         image = Magick::Image.from_blob(image_data).first
         preview = image.columns > 500 ? image.resize_to_fit(500, 10000) : image
