@@ -83,7 +83,7 @@ module Line
           when Line::Bot::Message::Image
             urls = image_urls
             client.send_image(
-              to_mid: from_mid,
+              to_mid: to_mids,
               image_url: urls[:image_url],
               preview_url: urls[:preview_url]
             )
