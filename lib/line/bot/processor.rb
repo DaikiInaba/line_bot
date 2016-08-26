@@ -225,13 +225,13 @@ module Line
           mids = region
                  .users
                  .to_a
-                 .delete_if{|member| member.tmp_region_id > 0 || member.mid == from_mid}
+                 .delete_if{|member| member.tmp_region_id > 0 || member.mid == from_mid || member.stage != 4}
                  .map{|member| member.mid}
         else
           origin_users = region
                         .users
                         .to_a
-                        .delete_if{|member| member.tmp_region_id > 0 || member.mid == from_mid}
+                        .delete_if{|member| member.tmp_region_id > 0 || member.mid == from_mid || member.stage != 4}
           tmp_users = region
                       .tmp_users
                       .to_a
