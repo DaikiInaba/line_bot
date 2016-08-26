@@ -1,5 +1,4 @@
 require 'line/bot'
-require 'line/bot/processor'
 
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
