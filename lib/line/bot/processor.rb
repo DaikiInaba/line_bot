@@ -152,7 +152,7 @@ module Line
           case text.length
           when 15 .. Float::INFINITY
             send_to_him("あら！なかなかいい出会いじゃない！")
-            send_to_him(2, 172, 100)
+            send_sticker_to_him(2, 172, 100)
             msg_flg =  true
             user.increment!(:stage)
           when 10 .. 15
