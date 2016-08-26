@@ -81,11 +81,11 @@ module Line
               initial_processor
             end
           when Line::Bot::Message::Image
-            image_url = get_image
+            urls = image_urls
             client.send_image(
               to_mid: from_mid,
-              image_url: image_url[0],
-              preview_url: image_url[1]
+              image_url: urls[:image_url],
+              preview_url: urls[:preview_url]
             )
           when Line::Bot::Message::Sticker
             client.send_sticker(
@@ -236,23 +236,10 @@ module Line
         mids
       end
 
-      def get_image
-        endpoint_url = "https://trialbot-api.line.me/v1/bot/message/#{data.id}/content"
-        response = nil
-        file = nil
-
-        uri = URI.parse(endpoint_url)
-        Net::HTTP.start(uri.host, uri.port, use_ssl: true){|http|
-          req = Net::HTTP::Get.new(uri.path)
-          req["Content-type"] = "application/json; charset=UTF-8"
-          req["X-Line-ChannelID"] = ENV["LINE_CHANNEL_ID"]
-          req["X-Line-ChannelSecret"] = ENV["LINE_CHANNEL_SECRET"]
-          req["X-Line-Trusted-User-With-ACL"] = ENV["LINE_CHANNEL_MID"]
-          response = http.request(req)
-        }
-
+      def image_urls
+        data = client.get_image(data.id)
         filename = SecureRandom.hex(13)
-        image = Magick::Image.from_blob(response.body).first
+        image = Magick::Image.from_blob(data).first
         preview = image.columns > 500 ? image.resize_to_fit(500, 10000) : image
 
         Aws.config.update(
@@ -272,7 +259,7 @@ module Line
           key: "line/preview/#{filename}.jpg"
         )
 
-        return ["https://s3-ap-northeast-1.amazonaws.com/proto-storage/line/original/#{filename}.png", "https://s3-ap-northeast-1.amazonaws.com/proto-storage/line/preview/#{filename}.jpg"]
+        {image_url: "https://s3-ap-northeast-1.amazonaws.com/proto-storage/line/original/#{filename}.png", preview_url: "https://s3-ap-northeast-1.amazonaws.com/proto-storage/line/preview/#{filename}.jpg"}
       end
     end
   end
