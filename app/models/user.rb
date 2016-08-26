@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
     if opts[:region]
       self.tmp_region = opts[:region]
     else
-      self.tmp_region = nil
+      self.tmp_region_id = 0
     end
 
     self.save!
