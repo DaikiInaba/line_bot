@@ -82,19 +82,23 @@ module Line
               initial_processor
             end
           when Line::Bot::Message::Image
-            urls = image_urls
-            client.send_image(
-              to_mid: to_mids,
-              image_url: urls[:image_url],
-              preview_url: urls[:preview_url]
-            )
+            if to_mids.length > 0
+              urls = image_urls
+              client.send_image(
+                to_mid: to_mids,
+                image_url: urls[:image_url],
+                preview_url: urls[:preview_url]
+              )
+            end
           when Line::Bot::Message::Sticker
-            client.send_sticker(
-              to_mid: to_mids,
-              stkpkgid: data.content[:stkpkgid],
-              stkid: data.content[:stkid],
-              stkver: data.content[:stkver],
-            )
+            if to_mids.length > 0
+              client.send_sticker(
+                to_mid: to_mids,
+                stkpkgid: data.content[:stkpkgid],
+                stkid: data.content[:stkid],
+                stkver: data.content[:stkver],
+              )
+            end
           end
         end
       end
