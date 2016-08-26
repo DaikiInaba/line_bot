@@ -198,17 +198,11 @@ module Line
       end
 
       def send_to_him(text)
-        client.send_text(
-          to_mid: from_mid,
-          text: text,
-        )
+        client.send_text(to_mid: from_mid, text: text)
       end
 
       def send_to_them(text)
-        client.send_text(
-          to_mid: to_mids,
-          text: text,
-        )
+        client.send_text(to_mid: to_mids, text: text) if to_mids.length > 0
       end
 
       def send_sticker_to_him(stkpkgid, stkid, stkver)
