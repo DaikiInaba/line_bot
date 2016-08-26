@@ -75,6 +75,12 @@ module Line
                 else
                   send_to_them(text_processor)
                 end
+              when /使い方忘れた/
+                send_to_him "使い方忘れちゃったの？仕方ないわね..."
+                send_to_him "困ったときは「#{user.region.name}」みたいに言うのよ。"
+                send_to_him "解決したら「ありがとう」。お礼は基本ね。"
+                send_to_him "すぐに答えてもらいたいときは、質問の前に「[緊急]」ってつけるといいわ。"
+                send_to_him "これで全部よ！今度はしっかり覚えておいてちょうだいね？"
               else
                 send_to_them(text_processor)
               end
@@ -173,6 +179,14 @@ module Line
             send_to_him(message)
             sleep 2 if message =~ /\.+/
           end
+          send_to_him "これから使い方を教えるわ"
+          send_to_him "迷彼は詳しい地域ごとに分かれていて、あなたは今#{user.region.name}に属しているわ。"
+          send_to_him "お出かけをして、困ったことがあったら「#{user.region.name}で質問」みたいに教えてちょうだい。\nそうすれば私はそこまで連れて行ってあげるわ！"
+          send_to_him "解決したらしっかりありがとうってお礼を言うのよ！そうすれば私が元の地域に連れて帰ってあげる！"
+          send_to_him "質問がないときは他の迷彼の質問にしっかり答えてあげるのよ！"
+          send_to_him "どうしてもすぐに答えてほしい時は質問の前に「[緊急]」ってつけるのよ！\n私が緊急っぽく仕上げてみんなに知らせてあげるわ。"
+          send_to_him "仕上がりに文句は言わないこと！いいわね？"
+          send_to_him "使い方は以上よ！忘れちゃったときは「使い方忘れた」って言ってくれればまた教えてあげるわ！せめてこの言葉だけは覚えておくのよ！"
         else
           message = BotMessage.find_by(stage: user.stage)
           send_to_him(message.text) if msg_flg
